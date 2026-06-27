@@ -7,23 +7,23 @@ group = "toutouchien.nodragonegg"
 version = "1.0.0"
 
 repositories {
-    mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/") // Paper
+    mavenCentral()
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
-    implementation("org.bstats:bstats-bukkit:3.2.1")
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 tasks {
-    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-        archiveClassifier.set("")
-        relocate("org.bstats", "${project.group}.org.bstats")
-    }
-
-    build {
-        dependsOn("shadowJar")
+    compileJava {
+        options.debugOptions.debugLevel = "none"
     }
 
     processResources {
@@ -32,5 +32,9 @@ tasks {
         from(rootProject.files("LICENSE", "THIRD_PARTY_LICENSES.md")) {
             into("META-INF")
         }
+    }
+
+    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+        archiveClassifier.set("")
     }
 }

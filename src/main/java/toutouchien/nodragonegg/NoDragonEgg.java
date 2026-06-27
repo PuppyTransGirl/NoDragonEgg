@@ -1,8 +1,8 @@
 package toutouchien.nodragonegg;
 
-import org.bstats.bukkit.Metrics;
-import org.bstats.charts.SimplePie;
 import org.bukkit.plugin.java.JavaPlugin;
+import toutouchien.nodragonegg.listeners.NoDragonEggListener;
+import toutouchien.nodragonegg.org.bstats.bukkit.Metrics;
 
 public class NoDragonEgg extends JavaPlugin {
     private static final int BSTATS_PLUGIN_ID = 32230;
@@ -19,18 +19,13 @@ public class NoDragonEgg extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-
-        registerMetrics();
+        this.bStats = new Metrics(this, BSTATS_PLUGIN_ID);
+        this.getServer().getPluginManager().registerEvents(new NoDragonEggListener(), this);
     }
 
     @Override
     public void onDisable() {
         if (bStats != null) bStats.shutdown();
-    }
-
-    private void registerMetrics() {
-        this.bStats = new Metrics(this, BSTATS_PLUGIN_ID);
-        bStats.addCustomChart(new SimplePie("enabled", () -> String.valueOf(this.getConfig().getBoolean("enabled"))));
     }
 
     public void reload() {
