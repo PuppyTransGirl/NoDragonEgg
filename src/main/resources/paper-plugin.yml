@@ -1,0 +1,8 @@
+name: NoDragonEgg
+version: '1.0.0'
+main: toutouchien.nodragonegg.NoDragonEgg
+bootstrapper: toutouchien.nodragonegg.NoDragonEggBootstrap
+api-version: '1.20.6'
+authors: [ PuppyTransGirl ]
+
+folia-supported: true
