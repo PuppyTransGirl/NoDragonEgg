@@ -21,7 +21,16 @@ tasks {
         archiveClassifier.set("")
         relocate("org.bstats", "${project.group}.org.bstats")
     }
+
     build {
         dependsOn("shadowJar")
+    }
+
+    processResources {
+        filteringCharset = "UTF-8"
+
+        from(rootProject.files("LICENSE", "THIRD_PARTY_LICENSES.md")) {
+            into("META-INF")
+        }
     }
 }
